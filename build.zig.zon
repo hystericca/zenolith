@@ -1,16 +1,15 @@
 .{
-    .name = "zenolith",
-    // The version number here currently serves little purpose and is also not retrievable from
-    // the build script. For this reason, it's set to 0.0.0 here and the actual version
-    // number is declared in build.zig.
-    .version = "0.0.0",
-
-    .paths = .{""},
-
-    .dependencies = .{
-        .statspatch = .{
-            .url = "git+https://git.mzte.de/LordMZTE/statspatch.git#fe27cf710f1db156acb8be4365d1a1a6365c6d95",
-            .hash = "1220c9e5c5d1fff2f7d1f5d02b235f832ef122c00bec0dc5ecf1c80995048addead9",
-        },
+    .name = .zenolith,
+    .version = "0.1.0",
+    .fingerprint = 0x966c52498198bb4c,
+    .minimum_zig_version = "0.17.0-dev.305+bdfbf432d",
+    .dependencies = .{},
+    .paths = .{
+        "build.zig",
+        "build.zig.zon",
+        "DESIGN.md",
+        "LICENSE",
+        "README.md",
+        "src",
     },
 }

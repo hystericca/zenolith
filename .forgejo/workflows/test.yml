@@ -10,9 +10,9 @@ jobs:
       - name: Setup Zig
         uses: https://github.com/goto-bus-stop/setup-zig@v2
         with:
-          version: 0.13.0
+          version: 0.17.0-dev.305+bdfbf432d
 
       - name: Test
         run: |
           zig fmt --check .
-          zig build test
+          zig build test --summary all

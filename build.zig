@@ -4,26 +4,23 @@ pub fn build(b: *std.Build) void {
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
 
-    const statspatch_dep = b.dependency("statspatch", .{ .target = target, .optimize = optimize });
-
-    _ = b.addModule("zenolith", .{
-        .root_source_file = b.path("src/main.zig"),
-        .imports = &.{.{
-            .name = "statspatch",
-            .module = statspatch_dep.module("statspatch"),
-        }},
-    });
-
-    const main_tests = b.addTest(.{
+    const module = b.addModule("zenolith", .{
         .root_source_file = b.path("src/main.zig"),
         .target = target,
         .optimize = optimize,
     });
 
-    main_tests.root_module.addImport("statspatch", statspatch_dep.module("statspatch"));
+    const tests = b.addTest(.{
+        .root_module = b.createModule(.{
+            .root_source_file = b.path("src/main.zig"),
+            .target = target,
+            .optimize = optimize,
+        }),
+    });
+    tests.root_module.addImport("zenolith", module);
 
-    const run_main_tests = b.addRunArtifact(main_tests);
+    const run_tests = b.addRunArtifact(tests);
 
-    const test_step = b.step("test", "Run library tests");
-    test_step.dependOn(&run_main_tests.step);
+    const test_step = b.step("test", "Run layout engine tests");
+    test_step.dependOn(&run_tests.step);
 }
